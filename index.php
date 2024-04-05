@@ -59,27 +59,58 @@
 </head>
 <body>
     
-    <!-- Form for Master Tag -->
-    <form action="process.php" method="POST">
-        <label for="masterTag">Master Tag:</label>
-        <input type="text" id="masterTag" name="masterTag">
-        <input type="submit" value="Submit">
-    </form>
-
-    <!-- Additional Inputs -->
-    <div class="subtag">
+<div class="container">
+        <!-- Master Tag Form -->
+        <h2>Master Tag Form</h2>
         <form action="process.php" method="POST">
-        <label for="masterTag">Sub Tag:</label>
-            <input type="text" id="parentTagName" name="parentTagName" placeholder="Parent Tag Name"><br>
-            <input type="text" id="tagName" name="tagName" placeholder="Tag Name"><br>
-            <input type="text" id="addedBy" name="addedBy" placeholder="Added By"><br>
-            <input type="number" id="parentTagId" name="parentTagId" placeholder="Parent Tag ID"><br>
-            <input type="text" id="updatedBy" name="updatedBy" placeholder="Updated By"><br>
+            <label for="masterTag">Master Tag:</label>
+            <input type="text" id="masterTag" name="masterTag">
+            <input type="submit" value="Submit">
+        </form>
+
+        <!-- Additional Tag Details Form -->
+        <h2>Additional Tag Details</h2>
+        <form action="process.php" method="POST">
+            <label for="parentTagName">Parent Tag Name:</label>
+            <select id="parentTagName" name="parentTagName">
+                <?php
+                include 'db.php'; // Ensure this path is correct
+
+                $query = "SELECT masterTag FROM master_tags";
+                $result = $conn->query($query);
+
+                if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                        echo "<option value='".$row["masterTag"]."'>".$row["masterTag"]."</option>";
+                    }
+                } else {
+                    echo "<option value=''>No master tags found</option>";
+                }
+                $conn->close();
+                ?>
+            </select>
+
+            <label for="tagName">Tag Name:</label>
+            <input type="text" id="tagName" name="tagName">
+
+            <label for="addedBy">Added By:</label>
+            <input type="text" id="addedBy" name="addedBy">
+
+            <label for="parentTagId">Parent Tag ID:</label>
+            <input type="number" id="parentTagId" name="parentTagId">
+
+            <label for="updatedBy">Updated By:</label>
+            <input type="text" id="updatedBy" name="updatedBy">
+
+            <label for="status">Status:</label>
             <select id="status" name="status">
                 <option value="true">True</option>
                 <option value="false">False</option>
-            </select><br>
-            <input type="time" id="updatedTime" name="updatedTime"><br>
+            </select>
+
+            <label for="updatedTime">Updated Time:</label>
+            <input type="time" id="updatedTime" name="updatedTime">
+
             <input type="submit" value="Submit">
         </form>
     </div>
