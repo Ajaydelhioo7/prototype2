@@ -1,52 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Prototype </title>
+    <title>Prototype Input</title>
     <script>
         function updateParentTagDetails() {
-            var parentTagSelector = document.getElementById("parentTagName");
+            var parentTagSelector = document.getElementById("parentTagNameSelect");
             var selectedOption = parentTagSelector.options[parentTagSelector.selectedIndex];
-            // Update the hidden parentTagId input field with the selected option's value (the ID)
-            document.getElementById("parentTagId").value = selectedOption.value;
-            // Also, update the hidden parentTagName input field with the selected option's text
-            document.getElementById("parentTagNameValue").value = selectedOption.text;
+            document.getElementById("parentTagId").value = selectedOption.value; // The value is the tag ID
+            document.getElementById("parentTagName").value = selectedOption.text; // The text is the tag name
         }
     </script>
-     <link rel="stylesheet" href="style.css">
+      <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <div class="box1">
-        <h2>Master Tag </h2>
+        <h2>Master Tag Form</h2>
         <form action="process.php" method="POST">
             <label for="masterTag">Master Tag:</label>
             <input type="text" id="masterTag" name="masterTag">
             <input type="submit" value="Submit">
         </form>
-        </div>
-      <div class="box2">
 
-      <h2>Sub Tag</h2>
-        <form action="process.php" method="POST" class="form">
+        <h2>Additional Tag Details</h2>
+        <form action="process.php" method="POST">
             <label for="parentTagName">Parent Tag Name:</label>
-            <select id="parentTagName" name="parentTagName" onchange="updateParentTagDetails()">
+            <select id="parentTagNameSelect" name="parentTagNameSelect" onchange="updateParentTagDetails()">
                 <option value="">Select a tag</option>
                 <?php
                 include 'db.php';
-                $query = "SELECT id, masterTag FROM master_tags ORDER BY masterTag";
+                $query = "SELECT id, masterTag FROM master_tags UNION SELECT id, tagName AS masterTag FROM tags ORDER BY masterTag";
                 $result = $conn->query($query);
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         echo "<option value='".$row["id"]."'>".$row["masterTag"]."</option>";
                     }
+                } else {
+                    echo "<option value=''>No tags found</option>";
                 }
                 $conn->close();
                 ?>
             </select>
-            <!-- Hidden input field to hold the parent tag ID -->
             <input type="hidden" id="parentTagId" name="parentTagId">
-            <!-- Hidden input field to hold the parent tag NAME -->
-            <input type="hidden" id="parentTagNameValue" name="parentTagNameValue">
+            <input type="hidden" id="parentTagName" name="parentTagName">
 
             <label for="tagName">Tag Name:</label>
             <input type="text" id="tagName" name="tagName">
@@ -68,8 +63,6 @@
 
             <input type="submit" value="Submit">
         </form>
-      </div>
-
     </div>
 </body>
 </html>
