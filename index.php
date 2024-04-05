@@ -1,61 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Prototype Input</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            padding: 10px;
-            width:600px;
-            height:600px;
-            margin:auto;
-        }
-        .container {
-            width: 70%;
-            margin: 0 auto;
-            background: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h2 {
-            color: #333;
-        }
-        form {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input[type="text"], input[type="number"], input[type="time"], select {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0 20px 0;
-            display: inline-block;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        input[type="submit"] {
-            width: 100%;
-            background-color: #fcba03;
-            color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-        
-    </style>
+    <title>Prototype </title>
     <script>
         function updateParentTagDetails() {
             var parentTagSelector = document.getElementById("parentTagName");
@@ -66,18 +12,22 @@
             document.getElementById("parentTagNameValue").value = selectedOption.text;
         }
     </script>
+     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
+        <div class="box1">
         <h2>Master Tag </h2>
         <form action="process.php" method="POST">
             <label for="masterTag">Master Tag:</label>
             <input type="text" id="masterTag" name="masterTag">
             <input type="submit" value="Submit">
         </form>
+        </div>
+      <div class="box2">
 
-        <h2>Sub Tag</h2>
-        <form action="process.php" method="POST">
+      <h2>Sub Tag</h2>
+        <form action="process.php" method="POST" class="form">
             <label for="parentTagName">Parent Tag Name:</label>
             <select id="parentTagName" name="parentTagName" onchange="updateParentTagDetails()">
                 <option value="">Select a tag</option>
@@ -118,6 +68,8 @@
 
             <input type="submit" value="Submit">
         </form>
+      </div>
+
     </div>
 </body>
 </html>
